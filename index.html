@@ -43,32 +43,32 @@ var topics = ["forest", "lake", "mountain", "rain", "canyon", "desert", "sunset"
 
     // function trying to fix bug
     function resetDiv () {
-    	 if ($(".gif").hasClass("animate")) {
-    	$(".gif").removeClass("animate");
-     }
+    	if ($(".gif").hasClass("animate")) {
+    		$(".gif").removeClass("animate");
+    	}
     }
     // button creation
-      function renderButtons() {
-      	$("#button-container").empty();
+    function renderButtons() {
+    	$("#button-container").empty();
 
-      	for (i=0; i<topics.length; i++) {
-      		var x = $("<button>");
-      		x.addClass("topic btn btn-lg")
-      		.attr("data-name", topics[i])
-      		.text(topics[i]);
-      		$("#button-container").append(x);
-      		resetDiv();
-      	}
-      }
-      // adding new button
-      $("#add-button").on("click", function(event) {
-      	event.preventDefault();
-      	var topic = $("#topic-input").val().trim();
-      	topics.push(topic);
-      	renderButtons();
-      	resetDiv();
+    	for (i=0; i<topics.length; i++) {
+    		var x = $("<button>");
+    		x.addClass("topic btn btn-lg")
+    		.attr("data-name", topics[i])
+    		.text(topics[i]);
+    		$("#button-container").append(x);
+    		resetDiv();
+    	}
+     }
+    // adding new button
+    $("#add-button").on("click", function(event) {
+	  	event.preventDefault();
+	  	var topic = $("#topic-input").val().trim();
+	  	topics.push(topic);
+	  	renderButtons();
+	  	resetDiv();
 
-      })
+    })
 
       renderButtons();
       resetDiv();
@@ -99,9 +99,9 @@ var topics = ["forest", "lake", "mountain", "rain", "canyon", "desert", "sunset"
           $("#gifs-on-screen").prepend(gifDiv);
           resetDiv();
 	
-   	}
+   			}
  
-         });
+  	});
 
     function emptyDiv () {
     	$(".gifs-on-screen").empty();
@@ -116,32 +116,31 @@ var topics = ["forest", "lake", "mountain", "rain", "canyon", "desert", "sunset"
   //     $('.gif').addClass('animate');
   //     pause();
   //   });
+    
+ }
 
-  //if else statement to pause and play
+ 	  //if else statement to pause and play
 $(document).on('click', '.gif', function() {
-    var src = $(this).attr("src");
+  var src = $(this).attr("src");
 
-       if ($(this).hasClass("animate")){
-        //pause
-          $(this).attr("src", src.replace(/\.gif/i, "_s.gif"))
-          $(this).removeClass("animate");
-          console.log("pause");
-          return("pause");
+	if ($(this).hasClass("animate")){
+	//pause
+	  $(this).attr("src", src.replace(/\.gif/i, "_s.gif"))
+	  $(this).removeClass("animate");
+	  console.log("pause");
+	  return("pause");
 
-       } else {
-        //play
-         $(this).addClass("animate");
-         $(this).attr("src", src.replace(/\_s.gif/i, ".gif"))
-         console.log("play");
-         return("pause");
-       }
-     });
-    
-    
-  }
+	} else {
+	//play
+	 $(this).addClass("animate");
+	 $(this).attr("src", src.replace(/\_s.gif/i, ".gif"))
+	 console.log("play");
+	 return("pause");
+	}
+ });
 
-   $(document).on("click", ".topic", appearGif);
    $(document).on("click", ".topic", resetDiv);
+   $(document).on("click", ".topic", appearGif);
  
 </script>
 
