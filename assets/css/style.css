@@ -8,7 +8,7 @@ h1 {
     text-shadow: 1px 1px 2px #737373, 0 0 25px lightgray, 0 0 5px lightgray;
     text-align: center;
     font-weight: bold;
-    font-size: 300%;
+    font-size: 400%;
     margin: 34px;
 }
 
@@ -30,17 +30,18 @@ p {
 
 }
 
-#input-form {
+#text-box {
 	margin-bottom: 20px;
-	margin-top: 20px;
+	margin-top: 25px;
 	margin-left: 5px;
 	color: #737373;
 }
 
 #add-button {
-	margin-top: 200px;
-	margin: auto 0;
+	margin-top: 15px;
+	margin: 5px;
 	color: #ff6699;
 	background: ghostwhite;
+	box-shadow: 2px 2px 1px lightgrey;
 
 }
