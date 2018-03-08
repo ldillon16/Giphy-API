@@ -1,0 +1,45 @@
+body {
+	background: #c2efef;
+	font-family: 'Quicksand', sans-serif;
+}
+
+h1 {
+	color: white;
+    text-shadow: 1px 1px 2px gray, 0 0 25px lightgray, 0 0 5px lightgray;
+    text-align: center;
+    font-weight: bold;
+    font-size: 300%;
+    margin: 34px;
+}
+
+p {
+	margin: auto;
+}
+
+.gif {
+	margin-top: 20px;
+
+}
+
+.btn-lg {
+	background: ghostwhite;
+	box-shadow: 4px 4px 3px lightgrey;
+	color: darkgray;
+	margin: 5px;
+
+}
+
+#input-form {
+	margin-bottom: 20px;
+	margin-top: 20px;
+	margin-left: 5px;
+	color: darkgray;
+}
+
+#add-button {
+	margin-top: 200px;
+	margin: auto 0;
+	color: pink;
+	background: ghostwhite;
+
+}

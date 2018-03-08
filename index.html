@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
   
 </head>
 
@@ -14,114 +14,135 @@
 
 
 <div class="container">
-  <h1>Gifs!</h1>
+  <h1>Nature Gifs!</h1>
 
     <!-- div where buttons will be created -->
     <div id="button-container"></div>
-
-    <form id="input-form">
-      <label for="topic-input">Add a Category</label>
-      <input type="text" id="topic-input"><br>
+	<div class="row">
+		<div class="col-md-9">
+      <form id="input-form">
+        <label for="topic-input">Add a Category: </label>
+        <input type="text" id="topic-input"><br>
 
       <!-- Button triggers new gifs to appear -->
-      <input id="add-button" type="submit" value="Add a Category">
-    </form>
-	<!-- this is where gifs and ratings will go -->
-    <div id="gifs-on-screen"></div>
+        <input id="add-button" class="btn btn-sm new-button" type="submit" value="Add Category">
+      </form>
+    </div>
+   </div>
 
+	<!-- this is where gifs and ratings will go -->
+	<div class="row">
+		<div class="col-md-9">
+      <div id="gifs-on-screen"></div>
+    </div>
+  </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
 
-var topics = ["trees", "lake", "mountain", "river", "canyon", "desert", "cactus"];
+var topics = ["forest", "lake", "mountain", "rain", "canyon", "desert", "sunset", "waves", "fog"];
 
-
-  function alertGif() {
-    alert($(this).attr("data-name"));
-  }
-
+    // function trying to fix bug
+    function resetDiv () {
+    	 if ($(".gif").hasClass("animate")) {
+    	$(".gif").removeClass("animate");
+     }
+    }
+    // button creation
       function renderButtons() {
       	$("#button-container").empty();
 
       	for (i=0; i<topics.length; i++) {
       		var x = $("<button>");
-      		x.addClass("topic")
+      		x.addClass("topic btn btn-lg")
       		.attr("data-name", topics[i])
       		.text(topics[i]);
       		$("#button-container").append(x);
+      		resetDiv();
       	}
       }
-
+      // adding new button
       $("#add-button").on("click", function(event) {
       	event.preventDefault();
       	var topic = $("#topic-input").val().trim();
       	topics.push(topic);
       	renderButtons();
+      	resetDiv();
 
       })
 
       renderButtons();
+      resetDiv();
 
- 			function appearGif() {
+  // pushing gifs and ratings to page upon button click (triggered at bottom of page)
+  function appearGif() {
+		var topic = $(this).attr("data-name");
+		var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=KgeeIdguXEHsO0CX11g7rQe4H7NdFZ0Q&q=" + topic + "&limit=10&offset=0&lang=en_s.gif";
 
-				var topic = $(this).attr("data-name");
-				var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=KgeeIdguXEHsO0CX11g7rQe4H7NdFZ0Q&q=" + topic + "&limit=10&offset=0&lang=en_s.gif";
-
-	     $.ajax({
-          url: queryURL,
-          method: "GET"
-        }).then(function(response) {
-         	var results = response.data;
-         	for (i=0; i<results.length; i++) {
-         		var gifDiv = $("<div class='gif-div'>");
-
-         		var rating = results[i].rating;
-         		var p = $("<p>").text("Rating: " + rating);
+	  $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).then(function(response) {
        
-        		var gifImage = $("<img class='gif'>");
+      var results = response.data;
+        for (i=0; i<results.length; i++) {
+          var gifDiv = $("<div class='gif-div'>");
+
+         	var rating = results[i].rating;
+         	var p = $("<p>").text("Rating: " + rating);
+       
+        	var gifImage = $("<img class='gif'>");
  								
-          		gifImage.attr("data-state", "still");
-          		gifImage.attr("src", results[i].images.fixed_height_still.url);
+          	gifImage.attr("data-state", "still");
+          	gifImage.attr("src", results[i].images.fixed_height_still.url);
 
-              gifDiv.prepend(p).prepend(gifImage);
-             
- 
-              $("#gifs-on-screen").prepend(gifDiv);
-
+          gifDiv.prepend(p).prepend(gifImage);
+          $("#gifs-on-screen").prepend(gifDiv);
+          resetDiv();
+	
    	}
+ 
          });
 
     function emptyDiv () {
-    	$(".gif-div").empty();
+    	$(".gifs-on-screen").empty();
     }
 
     emptyDiv();
-   
-    $('body').on('click', '.gif', function() {
+
+  //   $(".gif").removeClass("animate");
+  //   pause();
+
+		// $(document).on('click', '.gif', function() {
+  //     $('.gif').addClass('animate');
+  //     pause();
+  //   });
+
+  //if else statement to pause and play
+$(document).on('click', '.gif', function() {
     var src = $(this).attr("src");
-       if($(this).hasClass('playing')){
-    //    //pause
-          $(this).attr('src', src.replace(/\.gif/i, "_s.gif"))
-          $(this).removeClass('playing');
+
+       if ($(this).hasClass("animate")){
+        //pause
+          $(this).attr("src", src.replace(/\.gif/i, "_s.gif"))
+          $(this).removeClass("animate");
           console.log("pause");
+          return("pause");
+
        } else {
-         //play
-         $(this).addClass('playing');
-         $(this).attr('src', src.replace(/\_s.gif/i, ".gif"))
+        //play
+         $(this).addClass("animate");
+         $(this).attr("src", src.replace(/\_s.gif/i, ".gif"))
          console.log("play");
+         return("pause");
        }
      });
-
+    
+    
   }
 
-
    $(document).on("click", ".topic", appearGif);
-   // $(document).on("click", ".gif", animateGif);
-
-
-
-
-
-
+   $(document).on("click", ".topic", resetDiv);
+ 
 </script>
 
 </body>
