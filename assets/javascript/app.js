@@ -17,7 +17,6 @@ var topics = ["forest", "lake", "mountain", "rain", "canyon", "desert", "sunset"
     		.attr("data-name", topics[i])
     		.text(topics[i]);
     		$("#button-container").append(x);
-    		resetDiv();
     	}
      }
     // adding new button
@@ -26,7 +25,6 @@ var topics = ["forest", "lake", "mountain", "rain", "canyon", "desert", "sunset"
 	  	var topic = $("#topic-input").val().trim();
 	  	topics.push(topic);
 	  	renderButtons();
-	  	resetDiv();
 
     })
 
@@ -35,6 +33,7 @@ var topics = ["forest", "lake", "mountain", "rain", "canyon", "desert", "sunset"
 
   // pushing gifs and ratings to page upon button click (triggered at bottom of page)
   function appearGif() {
+
 		var topic = $(this).attr("data-name");
 		var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=KgeeIdguXEHsO0CX11g7rQe4H7NdFZ0Q&q=" + topic + "&limit=10&offset=0&lang=en_s.gif";
 
@@ -57,14 +56,12 @@ var topics = ["forest", "lake", "mountain", "rain", "canyon", "desert", "sunset"
 
           gifDiv.prepend(p).prepend(gifImage);
           $("#gifs-on-screen").prepend(gifDiv);
-          resetDiv();
-	
-   			}
- 
+   			}          
   	});
 
     function emptyDiv () {
-    	$(".gifs-on-screen").empty();
+    	$(gifDiv).clear();
+      
     }
 
     emptyDiv();
